@@ -1,0 +1,12 @@
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+            android:defaultValue="0"
+            android:key="startupList"
+            android:summary="@string/startup_list_summary"
+            android:title="@string/startup_list" />
+
+</PreferenceScreen>
