@@ -22,12 +22,23 @@ public class MirakelExtension extends DashClockExtension {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		int list_id = Integer.parseInt(prefs.getString("startupList", "-1"));
+		String where="";
+		if(list_id<0){
+			String[] col={"whereQuery"};
+			Cursor c=getContentResolver()
+					.query(Uri.parse("content://de.azapps.mirakel.provider/special_lists"),col," _id="+(-1*list_id),null,null);
+			c.moveToFirst();
+			if(c.getCount()>0){
+				where=c.getString(0);
+			}
+			c.close();
+		}
 		String[] col = { "name,priority,due" };
 		//TODO implement where from speciallist
 		Cursor c = getContentResolver()
 				.query(Uri.parse("content://de.azapps.mirakel.provider/tasks"),
 						col,
-						"list_id=" + list_id + " and done=0",
+						(where==""?" list_id=" + list_id :where)+ " and done=0 ",
 						null,
 						"priority desc, case when (due is NULL) then date('now','+1000 years') else date(due) end asc");
 		c.moveToFirst();
