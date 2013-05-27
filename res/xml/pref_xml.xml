@@ -8,5 +8,13 @@
             android:key="startupList"
             android:summary="@string/startup_list_summary"
             android:title="@string/startup_list" />
+    
+    <ListPreference
+            android:defaultValue="1"
+            android:key="showTasks"
+            android:title="@string/number_of"
+            android:entryValues="@array/Tasknumber"
+            android:entries="@array/Tasknumber"
+            android:summary="@string/how_many" />
 
 </PreferenceScreen>

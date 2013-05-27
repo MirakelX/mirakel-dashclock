@@ -17,5 +17,17 @@
     
     <string name="due_dbformat">yyyy-MM-dd</string>
     <string name="due_outformat">dd. MMMMM yyyy</string>
+    
+    <string name="number_of">Number of Tasks</string>
+    <string name="how_many">How many Tasks should be maximal shown?</string>
+    
+    <string-array name="Tasknumber">
+          <item>1</item>
+          <item>2</item>
+          <item>3</item>
+          <item>4</item>
+          <item>5</item>
+     </string-array>
+    
 
 </resources>
