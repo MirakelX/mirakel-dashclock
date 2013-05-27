@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
@@ -32,6 +33,11 @@ public class MirakelExtension extends DashClockExtension {
 			String[] col={"whereQuery"};
 			Cursor c=getContentResolver()
 					.query(Uri.parse("content://de.azapps.mirakel.provider/special_lists"),col," _id="+(-1*list_id),null,null);
+			if(c==null){
+				Log.wtf(TAG, "Mirakel-Contentprovider not Found");
+				Toast.makeText(this, getString(R.string.installMirakel), Toast.LENGTH_SHORT).show();
+				return;
+			}
 			c.moveToFirst();
 			if(c.getCount()>0){
 				where=c.getString(0);

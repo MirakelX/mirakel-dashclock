@@ -8,10 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MirakelSettingsActivity extends PreferenceActivity {
-//	private static final String TAG = "MirakelSettingsActivity";
+	private static final String TAG = "MirakelSettingsActivity";
 
 	@SuppressWarnings("deprecation")//TODO Why?
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,11 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 		Cursor c = getContentResolver().query(
 				Uri.parse("content://de.azapps.mirakel.provider/special_lists"),s ,
 				"1=1", null, null);
+		if(c==null){
+			Log.wtf(TAG, "Mirakel-Contentprovider not Found");
+			Toast.makeText(this, getString(R.string.installMirakel), Toast.LENGTH_SHORT).show();
+			return;
+		}
 		List<CharSequence>values=new ArrayList<CharSequence>();
 		List<CharSequence>entries=new ArrayList<CharSequence>();
 		c.moveToFirst();

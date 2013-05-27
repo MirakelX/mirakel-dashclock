@@ -28,6 +28,8 @@
           <item>4</item>
           <item>5</item>
      </string-array>
+     
+    <string name="installMirakel">Plese Install Mirakel to use MirakelDashclock-Extension</string>
     
 
 </resources>
