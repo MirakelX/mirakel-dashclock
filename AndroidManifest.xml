@@ -7,33 +7,36 @@
         android:minSdkVersion="17"
         android:targetSdkVersion="17" />
 
-        <application android:label="@string/app_name"
-    android:icon="@drawable/ic_launcher"
-    android:theme="@android:style/Theme.Holo.Light">
-
-    <service android:name=".MirakelExtension"
+    <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/extension_title"
-        android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-        <intent-filter>
-            <action android:name="com.google.android.apps.dashclock.Extension" />
-        </intent-filter>
-        <meta-data android:name="protocolVersion" android:value="1" />
-        <meta-data android:name="description"
-            android:value="@string/extension_description" />
-        <meta-data android:name="settingsActivity"
-			android:value=".MirakelSettingsActivity" />
-    </service>
-     <activity
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        <service
+            android:name=".MirakelExtension"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/extension_title"
+            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA" >
+            <intent-filter>
+                <action android:name="com.google.android.apps.dashclock.Extension" />
+            </intent-filter>
+
+            <meta-data
+                android:name="protocolVersion"
+                android:value="1" />
+            <meta-data
+                android:name="description"
+                android:value="@string/extension_description" />
+            <meta-data
+                android:name="settingsActivity"
+                android:value=".MirakelSettingsActivity" />
+        </service>
+
+        <activity
             android:name=".MirakelSettingsActivity"
             android:exported="true"
             android:label="@string/pref_name_title" >
-        <!-- TODO Blue Actionbar -->
-     </activity>
-     
- 
-
-</application>
+        </activity>
+    </application>
 
 </manifest>
-

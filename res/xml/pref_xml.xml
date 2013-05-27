@@ -4,10 +4,11 @@
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="-1"
             android:key="startupList"
             android:summary="@string/startup_list_summary"
-            android:title="@string/startup_list" />
+            android:title="@string/startup_list" 
+            android:layout="@layout/pref"/>
     
     <ListPreference
             android:defaultValue="1"
@@ -15,6 +16,7 @@
             android:title="@string/number_of"
             android:entryValues="@array/Tasknumber"
             android:entries="@array/Tasknumber"
-            android:summary="@string/how_many" />
+            android:summary="@string/how_many"
+            android:layout="@layout/pref" />
 
 </PreferenceScreen>
