@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
+
 
 public class MirakelExtension extends DashClockExtension {
 
@@ -107,10 +110,17 @@ public class MirakelExtension extends DashClockExtension {
 				++counter;
 			}
 		}
+		//Add click-event
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.setComponent(new ComponentName("de.azapps.mirakel","de.azapps.mirakel.main_activity.MainActivity"));
+		intent.setAction("de.azapps.mirakel.SHOW_LIST");
+		intent.putExtra("de.azapps.mirakel.EXTRA_TASKID", list_id);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		// Set Content
 		publishUpdate(new ExtensionData().visible(true)
 				.icon(R.drawable.ic_launcher).status(status)
-				.expandedBody(expBody));
+				.expandedBody(expBody)
+				.clickIntent(intent));
 
 	}
 }
