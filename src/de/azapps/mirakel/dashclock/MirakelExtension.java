@@ -84,7 +84,7 @@ public class MirakelExtension extends DashClockExtension {
 		else if (c.getCount() == 1)
 			status = getString(R.string.status1);
 		else
-			status = c.getCount() + " " + getString(R.string.status2);
+			status = getString(R.string.status2,c.getCount());
 		// Set Body
 		String expBody = "";
 		if (c.getCount() > 0) {
@@ -101,12 +101,14 @@ public class MirakelExtension extends DashClockExtension {
 					Log.wtf(TAG, "failed to parse Date from db");
 				} catch (NullPointerException e) {
 				}
-				expBody += c.getString(0)
-						+ (t == null ? " " : " " + getString(R.string.to) + " "
-								+ out.format(t));
+				if(t!=null)
+					expBody += getString(R.string.due,c.getString(0),out.format(t));
+				else
+					expBody += c.getString(0);
+
 				c.moveToNext();
-				expBody += (counter < maxTasks - 1 && !c.isAfterLast() ? "\n"
-						: "");
+				if(counter < maxTasks - 1 && !c.isAfterLast())
+					expBody += "\n";
 				++counter;
 			}
 		}
