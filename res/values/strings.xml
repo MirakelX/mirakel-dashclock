@@ -49,6 +49,8 @@
      </string-array>
      
     <string name="installMirakel">Plese Install Mirakel to use MirakelDashclock-Extension</string>
+    <string name="OK">OK</string>
+    <string name="Cancel">Cancle</string>
     
 
 </resources>

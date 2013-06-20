@@ -24,14 +24,10 @@
             android:summary="@string/startup_list_summary"
             android:title="@string/startup_list" 
             android:layout="@layout/pref"/>
-    
-    <ListPreference
-            android:defaultValue="1"
-            android:key="showTasks"
-            android:title="@string/number_of"
-            android:entryValues="@array/Tasknumber"
-            android:entries="@array/Tasknumber"
-            android:summary="@string/how_many"
-            android:layout="@layout/pref" />
+    <Preference
+        android:key="showTasks"
+        android:layout="@layout/pref"
+        android:summary="@string/how_many"
+        android:title="@string/number_of" />
 
 </PreferenceScreen>

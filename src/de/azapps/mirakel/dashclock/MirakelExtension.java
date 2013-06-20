@@ -46,7 +46,7 @@ public class MirakelExtension extends DashClockExtension {
 				.getDefaultSharedPreferences(this);
 		// Get values from Settings
 		int list_id = Integer.parseInt(prefs.getString("startupList", "-1"));
-		int maxTasks = Integer.parseInt(prefs.getString("showTasks", "1"));
+		int maxTasks = prefs.getInt("showTaskNumber", 1);
 		// Get where-clause
 		String where = "";
 		if (list_id < 0) {

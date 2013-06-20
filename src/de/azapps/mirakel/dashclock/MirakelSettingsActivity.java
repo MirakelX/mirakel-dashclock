@@ -21,6 +21,12 @@ package de.azapps.mirakel.dashclock;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -30,14 +36,19 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MirakelSettingsActivity extends PreferenceActivity {
 	private static final String TAG = "MirakelSettingsActivity";
+	private NumberPicker numberPicker;
 
 	@SuppressWarnings("deprecation")
 	// TODO Why?
@@ -48,7 +59,6 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 		d.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
 		getActionBar().setIcon(d);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		;
 		getActionBar().setBackgroundDrawable(
 				new ColorDrawable(Color.rgb(0, 153, 204)));
 		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
@@ -92,6 +102,45 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 				.size()]));
 		startupListPreference.setEntryValues(values.toArray(new String[values
 				.size()]));
+		Preference p=findPreference("showTasks");
+		final Context ctx=this;
+		final SharedPreferences settings = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		p.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				numberPicker = new NumberPicker(ctx);
+				numberPicker.setMaxValue(5);
+				numberPicker.setMinValue(0);
+				numberPicker.setWrapSelectorWheel(false);
+				numberPicker.setValue(settings.getInt("showTaskNumber", 0));
+				numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+				new AlertDialog.Builder(ctx)
+				.setTitle(getString(R.string.number_of))
+				.setMessage(getString(R.string.how_many))
+				.setView(numberPicker)
+				.setPositiveButton(getString(R.string.OK),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								SharedPreferences.Editor editor = settings.edit();
+								editor.putInt("showTaskNumber", numberPicker.getValue());
+								editor.commit();
+							}
+
+						})
+				.setNegativeButton(getString(R.string.Cancel),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								// Do nothing.
+							}
+						}).show();
+				return true;
+			}
+		});
+		
 
 	}
 
