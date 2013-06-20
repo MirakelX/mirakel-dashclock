@@ -118,6 +118,7 @@ public class MirakelExtension extends DashClockExtension {
 		intent.setAction("de.azapps.mirakel.SHOW_LIST");
 		intent.putExtra("de.azapps.mirakel.EXTRA_TASKID", list_id);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		// Set Content
 		publishUpdate(new ExtensionData().visible(true)
 				.icon(R.drawable.ic_launcher).status(status)
