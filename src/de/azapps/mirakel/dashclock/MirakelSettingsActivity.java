@@ -69,10 +69,16 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 		ListPreference startupListPreference = (ListPreference) findPreference("startupList");
 		String[] s = { "_id", "name" };
 		// Get Lists from Mirakel-Contentresolver
-		Cursor c = getContentResolver()
+		Cursor c=null;
+		try {
+			c= getContentResolver()
 				.query(Uri
 						.parse("content://de.azapps.mirakel.provider/special_lists"),
 						s, "1=1", null, null);
+		}catch(Exception e){
+			Log.e(TAG,"Cannot communicate to Mirakel");
+			return;
+		}
 		if (c == null) {
 			Log.wtf(TAG, "Mirakel-Contentprovider not Found");
 			Toast.makeText(this, getString(R.string.installMirakel),

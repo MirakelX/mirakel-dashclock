@@ -51,10 +51,16 @@ public class MirakelExtension extends DashClockExtension {
 		String where = "";
 		if (list_id < 0) {
 			String[] col = { "whereQuery" };
-			Cursor c = getContentResolver()
+			Cursor c=null;
+			try{
+			c = getContentResolver()
 					.query(Uri
 							.parse("content://de.azapps.mirakel.provider/special_lists"),
 							col, " _id=" + (-1 * list_id), null, null);
+			}catch(Exception e){
+				Log.e(TAG,"Cannot communicate to Mirakel");
+				return;
+			}
 			if (c == null) {
 				Log.wtf(TAG, "Mirakel-Contentprovider not Found");
 				Toast.makeText(this, getString(R.string.installMirakel),
@@ -69,13 +75,19 @@ public class MirakelExtension extends DashClockExtension {
 		}
 		// Get Tasks
 		String[] col = { "name,priority,due" };
-		Cursor c = getContentResolver()
+		Cursor c =null;
+		try{
+			c= getContentResolver()
 				.query(Uri.parse("content://de.azapps.mirakel.provider/tasks"),
 						col,
 						(where == "" ? " list_id=" + list_id : where)
 								+ " and done=0 ",
 						null,
 						"priority desc, case when (due is NULL) then date('now','+1000 years') else date(due) end asc");
+		}catch(Exception e){
+			Log.e(TAG,"Cannot communicate to Mirakel");
+			return;
+		}
 		c.moveToFirst();
 		// Set Status
 		String status = "";
