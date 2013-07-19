@@ -23,7 +23,6 @@
     <string name="extension_title">Mirakel</string>
     <string name="extension_description">Dashclockextension for Mirakel</string>
     <string name="pref_name_title">Mirakel-Dashclock Settings</string>
-    <string name="pref_name_default">Foo</string>
     
     <string name="startup_list">Select List</string>
     <string name="startup_list_summary">Tasks of which list should be displayed?</string>
@@ -40,13 +39,6 @@
     <string name="number_of">Number of Tasks</string>
     <string name="how_many">How many Tasks should be maximal shown?</string>
     
-    <string-array name="Tasknumber">
-          <item>1</item>
-          <item>2</item>
-          <item>3</item>
-          <item>4</item>
-          <item>5</item>
-     </string-array>
      
     <string name="installMirakel">Plese Install Mirakel to use MirakelDashclock-Extension</string>
     <string name="OK">OK</string>

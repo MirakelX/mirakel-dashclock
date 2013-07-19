@@ -67,7 +67,6 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 		getListView().setDividerHeight(0);
 		addPreferencesFromResource(R.xml.pref_xml);
 		ListPreference startupListPreference = (ListPreference) findPreference("startupList");
-
 		String[] s = { "_id", "name" };
 		// Get Lists from Mirakel-Contentresolver
 		Cursor c = getContentResolver()
