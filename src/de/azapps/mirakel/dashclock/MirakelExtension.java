@@ -126,7 +126,7 @@ public class MirakelExtension extends DashClockExtension {
 		}
 		//Add click-event
 		Intent intent = new Intent(Intent.ACTION_MAIN);
-		intent.setComponent(new ComponentName("de.azapps.mirakel","de.azapps.mirakel.main_activity.MainActivity"));
+		intent.setComponent(new ComponentName("de.azapps.mirakelandroid","de.azapps.mirakel.main_activity.MainActivity"));
 		intent.setAction("de.azapps.mirakel.SHOW_LIST");
 		intent.putExtra("de.azapps.mirakel.EXTRA_TASKID", list_id);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
