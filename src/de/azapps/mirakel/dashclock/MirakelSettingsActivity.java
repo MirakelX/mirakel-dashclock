@@ -125,7 +125,7 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 				.setTitle(getString(R.string.number_of))
 				.setMessage(getString(R.string.how_many))
 				.setView(numberPicker)
-				.setPositiveButton(getString(R.string.OK),
+				.setPositiveButton(getString(android.R.string.ok),
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
@@ -135,7 +135,7 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 							}
 
 						})
-				.setNegativeButton(getString(R.string.Cancel),
+				.setNegativeButton(getString(android.R.string.cancel),
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
