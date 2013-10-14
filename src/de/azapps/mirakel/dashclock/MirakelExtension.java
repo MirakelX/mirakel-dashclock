@@ -35,7 +35,6 @@ import android.widget.Toast;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
 
-
 public class MirakelExtension extends DashClockExtension {
 
 	private static final String TAG = "MirakelExtension";
@@ -51,14 +50,14 @@ public class MirakelExtension extends DashClockExtension {
 		String where = "";
 		if (list_id < 0) {
 			String[] col = { "whereQuery" };
-			Cursor c=null;
-			try{
-			c = getContentResolver()
-					.query(Uri
-							.parse("content://de.azapps.mirakel.provider/special_lists"),
-							col, " _id=" + (-1 * list_id), null, null);
-			}catch(Exception e){
-				Log.e(TAG,"Cannot communicate to Mirakel");
+			Cursor c = null;
+			try {
+				c = getContentResolver()
+						.query(Uri
+								.parse("content://de.azapps.mirakel.provider/special_lists"),
+								col, " _id=" + (-1 * list_id), null, null);
+			} catch (Exception e) {
+				Log.e(TAG, "Cannot communicate to Mirakel");
 				return;
 			}
 			if (c == null) {
@@ -75,17 +74,18 @@ public class MirakelExtension extends DashClockExtension {
 		}
 		// Get Tasks
 		String[] col = { "name,priority,due" };
-		Cursor c =null;
-		try{
-			c= getContentResolver()
-				.query(Uri.parse("content://de.azapps.mirakel.provider/tasks"),
-						col,
-						(where == "" ? " list_id=" + list_id : where)
-								+ " and done=0 ",
-						null,
-						"priority desc, case when (due is NULL) then date('now','+1000 years') else date(due) end asc");
-		}catch(Exception e){
-			Log.e(TAG,"Cannot communicate to Mirakel");
+		Cursor c = null;
+		try {
+			c = getContentResolver()
+					.query(Uri
+							.parse("content://de.azapps.mirakel.provider/tasks"),
+							col,
+							(where.equals("") ? " list_id=" + list_id : where)
+									+ " and done=0 ",
+							null,
+							"priority desc, case when (due is NULL) then date('now','+1000 years') else date(due) end asc");
+		} catch (Exception e) {
+			Log.e(TAG, "Cannot communicate to Mirakel");
 			return;
 		}
 		c.moveToFirst();
@@ -96,7 +96,7 @@ public class MirakelExtension extends DashClockExtension {
 		else if (c.getCount() == 1)
 			status = getString(R.string.status1);
 		else
-			status = getString(R.string.status2,c.getCount());
+			status = getString(R.string.status2, c.getCount());
 		// Set Body
 		String expBody = "";
 		if (c.getCount() > 0) {
@@ -113,29 +113,30 @@ public class MirakelExtension extends DashClockExtension {
 					Log.wtf(TAG, "failed to parse Date from db");
 				} catch (NullPointerException e) {
 				}
-				if(t!=null)
-					expBody += getString(R.string.due,c.getString(0),out.format(t));
+				if (t != null)
+					expBody += getString(R.string.due, c.getString(0),
+							out.format(t));
 				else
 					expBody += c.getString(0);
 
 				c.moveToNext();
-				if(counter < maxTasks - 1 && !c.isAfterLast())
+				if (counter < maxTasks - 1 && !c.isAfterLast())
 					expBody += "\n";
 				++counter;
 			}
 		}
-		//Add click-event
+		// Add click-event
 		Intent intent = new Intent(Intent.ACTION_MAIN);
-		intent.setComponent(new ComponentName("de.azapps.mirakelandroid","de.azapps.mirakel.main_activity.MainActivity"));
+		intent.setComponent(new ComponentName("de.azapps.mirakelandroid",
+				"de.azapps.mirakel.main_activity.MainActivity"));
 		intent.setAction("de.azapps.mirakel.SHOW_LIST");
 		intent.putExtra("de.azapps.mirakel.EXTRA_TASKID", list_id);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		// Set Content
 		publishUpdate(new ExtensionData().visible(true)
-				.icon(R.drawable.ic_launcher).status(status)
-				.expandedBody(expBody)
-				.clickIntent(intent));
+				.icon(R.drawable.bw_mirakel).status(status)
+				.expandedBody(expBody).clickIntent(intent));
 
 	}
 }
