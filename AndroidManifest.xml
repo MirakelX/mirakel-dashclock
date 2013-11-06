@@ -19,13 +19,13 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.azapps.mirakel.dashclock"
-    android:versionCode="3"
-    android:versionName="1.0" >
+    android:versionCode="4"
+    android:versionName="1.1" >
     <uses-permission android:name="de.azapps.mirakel.provider.READ_DATA"/>
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
