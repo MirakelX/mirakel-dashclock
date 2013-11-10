@@ -21,7 +21,7 @@ package de.azapps.mirakel.dashclock;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.dmfs.provider.tasks.TaskContract.TaskLists;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,7 +33,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -54,7 +53,7 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 	// TODO Why?
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Fix Layout
+		// Fix Layout
 		Drawable d = getResources().getDrawable(R.drawable.ic_launcher);
 		d.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
 		getActionBar().setIcon(d);
@@ -67,16 +66,14 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 		getListView().setDividerHeight(0);
 		addPreferencesFromResource(R.xml.pref_xml);
 		ListPreference startupListPreference = (ListPreference) findPreference("startupList");
-		String[] s = { "_id", "name" };
+		String[] s = { TaskLists._ID, TaskLists.LIST_NAME };
 		// Get Lists from Mirakel-Contentresolver
-		Cursor c=null;
+		Cursor c = null;
 		try {
-			c= getContentResolver()
-				.query(Uri
-						.parse("content://de.azapps.mirakel.provider/special_lists"),
-						s, "1=1", null, null);
-		}catch(Exception e){
-			Log.e(TAG,"Cannot communicate to Mirakel");
+			c = getContentResolver().query(TaskLists.CONTENT_URI, s, "1=1",
+					null, null);
+		} catch (Exception e) {
+			Log.e(TAG, "Cannot communicate to Mirakel");
 			return;
 		}
 		if (c == null) {
@@ -89,30 +86,20 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 		List<CharSequence> entries = new ArrayList<CharSequence>();
 		c.moveToFirst();
 		while (!c.isAfterLast()) {
-			values.add("" + (-1 * c.getInt(0)));
+			values.add("" + (c.getInt(0)));
 			entries.add(c.getString(1));
 			c.moveToNext();
 		}
-		c = getContentResolver().query(
-				Uri.parse("content://de.azapps.mirakel.provider/lists"), s,
-				"1=1", null, "lft");
-		c.moveToFirst();
-		while (!c.isAfterLast()) {
-			values.add(c.getString(0));
-			entries.add(c.getString(1));
-			c.moveToNext();
-		}
-		c.close();
 		startupListPreference.setEntries(entries.toArray(new String[entries
 				.size()]));
 		startupListPreference.setEntryValues(values.toArray(new String[values
 				.size()]));
-		Preference p=findPreference("showTasks");
-		final Context ctx=this;
+		Preference p = findPreference("showTasks");
+		final Context ctx = this;
 		final SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		p.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			
+
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				numberPicker = new NumberPicker(ctx);
@@ -120,32 +107,34 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 				numberPicker.setMinValue(0);
 				numberPicker.setWrapSelectorWheel(false);
 				numberPicker.setValue(settings.getInt("showTaskNumber", 0));
-				numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+				numberPicker
+						.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 				new AlertDialog.Builder(ctx)
-				.setTitle(getString(R.string.number_of))
-				.setMessage(getString(R.string.how_many))
-				.setView(numberPicker)
-				.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								SharedPreferences.Editor editor = settings.edit();
-								editor.putInt("showTaskNumber", numberPicker.getValue());
-								editor.commit();
-							}
+						.setTitle(getString(R.string.number_of))
+						.setMessage(getString(R.string.how_many))
+						.setView(numberPicker)
+						.setPositiveButton(getString(android.R.string.ok),
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int whichButton) {
+										SharedPreferences.Editor editor = settings
+												.edit();
+										editor.putInt("showTaskNumber",
+												numberPicker.getValue());
+										editor.commit();
+									}
 
-						})
-				.setNegativeButton(getString(android.R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								// Do nothing.
-							}
-						}).show();
+								})
+						.setNegativeButton(getString(android.R.string.cancel),
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int whichButton) {
+										// Do nothing.
+									}
+								}).show();
 				return true;
 			}
 		});
-		
 
 	}
 
