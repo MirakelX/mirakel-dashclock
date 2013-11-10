@@ -54,7 +54,7 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Fix Layout
-		Drawable d = getResources().getDrawable(R.drawable.ic_launcher);
+		Drawable d = getResources().getDrawable(R.drawable.bw_mirakel);
 		d.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
 		getActionBar().setIcon(d);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
