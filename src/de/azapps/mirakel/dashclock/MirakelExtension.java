@@ -82,17 +82,18 @@ public class MirakelExtension extends DashClockExtension {
 			int counter = 0;
 			while (!c.isAfterLast() && counter < maxTasks) {
 				Date t = null;
-				try {
-					t = new Date(c.getLong(2));
-				} catch (NullPointerException e) {
-					// Nothing
+				if (!c.isNull(2)) {
+					try {
+						t = new Date(c.getLong(2));
+					} catch (NullPointerException e) {
+						// Nothing
+					}
 				}
 				if (t != null)
 					expBody += getString(R.string.due, c.getString(0),
 							out.format(t));
 				else
 					expBody += c.getString(0);
-
 				c.moveToNext();
 				if (counter < maxTasks - 1 && !c.isAfterLast())
 					expBody += "\n";
