@@ -23,23 +23,15 @@
     <string name="extension_title">Mirakel</string>
     <string name="extension_description">Dashclock-extension for Mirakel</string>
     <string name="pref_name_title">Mirakel-Dashclock</string>
-    
     <string name="startup_list">Select list</string>
     <string name="startup_list_summary">Tasks of which list should be displayed?</string>
-    
     <string name="status1">One task to do</string>
     <string name="status2" formatted="false">%d tasks to do</string>
     <string name="status0">No tasks</string>
-    
     <string name="due" formatted="false">%s (due %s)</string>
-    
-    <string name="due_dbformat">yyyy-MM-dd</string>
     <string name="due_outformat">yyyy-MM-dd</string>
-    
     <string name="number_of">Number of tasks</string>
     <string name="how_many">How many tasks should be maximal shown?</string>
- 
     <string name="installMirakel">Please install Mirakel to use Dashclock-extension</string>
-    
 
 </resources>
