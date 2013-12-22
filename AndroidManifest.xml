@@ -19,9 +19,10 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.azapps.mirakel.dashclock"
-    android:versionCode="5"
-    android:versionName="1.2" >
-    <uses-permission android:name="de.azapps.mirakel.provider.READ_DATA"/>
+    android:versionCode="6"
+    android:versionName="1.2.1" >
+
+    <uses-permission android:name="de.azapps.mirakel.provider.READ_DATA" />
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -57,6 +58,12 @@
             android:exported="true"
             android:label="@string/pref_name_title" >
         </activity>
+
+        <receiver android:name="de.azapps.mirakel.dashclock.MirakelReceiver" >
+            <intent-filter>
+                <action android:name="de.azapps.mirakel.dashclock.UPDATE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

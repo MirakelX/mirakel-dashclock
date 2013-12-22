@@ -31,20 +31,25 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
 
 public class MirakelExtension extends DashClockExtension {
 
 	private static final String TAG = "MirakelExtension";
+	private static boolean initialized = false;
+	private SharedPreferences settings;
+	private static MirakelExtension singleton;
 
 	@Override
 	protected void onUpdateData(int reason) {
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		singleton = this;
+		if (settings == null)
+			settings = PreferenceManager.getDefaultSharedPreferences(this);
 		// Get values from Settings
-		int list_id = Integer.parseInt(prefs.getString("startupList", "-1"));
-		int maxTasks = prefs.getInt("showTaskNumber", 1);
+		int list_id = Integer.parseInt(settings.getString("startupList", "-1"));
+		int maxTasks = settings.getInt("showTaskNumber", 1);
 		// Get Tasks
 		String[] col = { Tasks.TITLE, Tasks.PRIORITY, Tasks.DUE };
 		Cursor c = null;
@@ -112,6 +117,16 @@ public class MirakelExtension extends DashClockExtension {
 		publishUpdate(new ExtensionData().visible(true)
 				.icon(R.drawable.bw_mirakel).status(status)
 				.expandedBody(expBody).clickIntent(intent));
+		initialized = true;
+	}
 
+	public static boolean isInitialized() {
+		return initialized;
+	}
+
+	public static void updateWidget() {
+		if (singleton == null)
+			return;
+		singleton.onUpdateData(UPDATE_REASON_CONTENT_CHANGED);
 	}
 }
