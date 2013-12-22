@@ -76,7 +76,7 @@ public class MirakelExtension extends DashClockExtension {
 		String status = getResources().getQuantityString(R.plurals.status,
 				c.getCount(), c.getCount());
 		if (c.getCount() == 0) {
-			if (!prefs.getBoolean("showEmpty", true)) {
+			if (!settings.getBoolean("showEmpty", true)) {
 				Log.d(TAG, "hide");
 				publishUpdate(new ExtensionData().visible(false));
 				return;
