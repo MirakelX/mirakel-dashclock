@@ -68,17 +68,20 @@ public class MirakelExtension extends DashClockExtension {
 									+ Tasks.DUE + ") end asc");
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot communicate to Mirakel");
+			Log.w(TAG, Log.getStackTraceString(e));
 			return;
 		}
 		c.moveToFirst();
 		// Set Status
-		String status = "";
-		if (c.getCount() == 0)
-			status = getString(R.string.status0);
-		else if (c.getCount() == 1)
-			status = getString(R.string.status1);
-		else
-			status = getString(R.string.status2, c.getCount());
+		String status = getResources().getQuantityString(R.plurals.status,
+				c.getCount(), c.getCount());
+		if (c.getCount() == 0) {
+			if (!prefs.getBoolean("showEmpty", true)) {
+				Log.d(TAG, "hide");
+				publishUpdate(new ExtensionData().visible(false));
+				return;
+			}
+		}
 		// Set Body
 		String expBody = "";
 		if (c.getCount() > 0) {

@@ -27,22 +27,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MirakelSettingsActivity extends PreferenceActivity {
@@ -53,19 +49,14 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 	// TODO Why?
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Fix Layout
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
 		Drawable d = getResources().getDrawable(R.drawable.bw_mirakel);
-		d.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
 		getActionBar().setIcon(d);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.rgb(0, 153, 204)));
-		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
-				"id", "android");
-		((TextView) findViewById(titleId)).setTextColor(Color.WHITE);
 		getListView().setDividerHeight(0);
 		addPreferencesFromResource(R.xml.pref_xml);
-		ListPreference startupListPreference = (ListPreference) findPreference("startupList");
+		final ListPreference startupListPreference = (ListPreference) findPreference("startupList");
 		String[] s = { TaskLists._ID, TaskLists.LIST_NAME };
 		// Get Lists from Mirakel-Contentresolver
 		Cursor c = null;
@@ -82,19 +73,35 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		List<CharSequence> values = new ArrayList<CharSequence>();
-		List<CharSequence> entries = new ArrayList<CharSequence>();
+		int list_id = Integer.parseInt(prefs.getString("startupList", "-1"));
+		final List<CharSequence> values = new ArrayList<CharSequence>();
+		final List<CharSequence> entries = new ArrayList<CharSequence>();
 		c.moveToFirst();
 		while (!c.isAfterLast()) {
 			values.add("" + (c.getInt(0)));
 			entries.add(c.getString(1));
 			c.moveToNext();
 		}
+		setListSummary(startupListPreference, list_id, values, entries);
 		startupListPreference.setEntries(entries.toArray(new String[entries
 				.size()]));
 		startupListPreference.setEntryValues(values.toArray(new String[values
 				.size()]));
-		Preference p = findPreference("showTasks");
+		final Preference p = findPreference("showTasks");
+		int maxTasks = prefs.getInt("showTaskNumber", 1);
+		startupListPreference
+				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+					@Override
+					public boolean onPreferenceChange(Preference preference, Object newValue) {
+						int listId = Integer.parseInt(newValue.toString());
+						setListSummary(startupListPreference, listId, values,
+								entries);
+						return true;
+					}
+				});
+		p.setSummary(getResources().getQuantityString(R.plurals.how_many,
+				maxTasks, maxTasks));
 		final Context ctx = this;
 		final SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -117,11 +124,15 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog,
 											int whichButton) {
+										int count = numberPicker.getValue();
 										SharedPreferences.Editor editor = settings
 												.edit();
-										editor.putInt("showTaskNumber",
-												numberPicker.getValue());
+										editor.putInt("showTaskNumber", count);
 										editor.commit();
+										p.setSummary(getResources()
+												.getQuantityString(
+														R.plurals.how_many,
+														count, count));
 									}
 
 								})
@@ -136,6 +147,16 @@ public class MirakelSettingsActivity extends PreferenceActivity {
 			}
 		});
 
+	}
+
+	private void setListSummary(final ListPreference startupListPreference, int list_id, List<CharSequence> values, List<CharSequence> entries) {
+		for (int i = 0; i < entries.size(); i++) {
+			if (values.get(i).equals(list_id + "")) {
+				startupListPreference.setSummary(entries.get(i));
+				break;
+			}
+		}
+		Log.d(TAG, "fuck " + list_id);
 	}
 
 	@Override
