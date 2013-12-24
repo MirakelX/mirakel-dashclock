@@ -9,4 +9,5 @@
   <string name="due_outformat">jj/mm/aaaa</string>
   <string name="number_of">Nombre de tâches</string>
   <string name="installMirakel">Veuillez installer Mirakel pour utiliser l\'extension Dashclock</string>
+  <string name="how_many">Combien de tâches devrait être affichées au maximum ?</string>
 </resources>

@@ -8,4 +8,5 @@
   <string name="due" formatted="false">%s (termín %s)</string>
   <string name="number_of">Počet úkolů</string>
   <string name="installMirakel">Prosím, nainstalujte Mirakel aby bylo možné použít rozšíření Dashclock</string>
+  <string name="how_many">Kolik úkolů se má nejvýše zobrazit?</string>
 </resources>

@@ -8,4 +8,5 @@
   <string name="due" formatted="false">%s (als gevolg van %s)</string>
   <string name="number_of">Aantal taken</string>
   <string name="installMirakel">AUB installeer Mirakel voor de Dachclock-extensie</string>
+  <string name="how_many">Hoeveel taken maximaal weergeven?</string>
 </resources>
