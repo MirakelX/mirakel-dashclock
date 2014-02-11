@@ -29,6 +29,7 @@
     <string name="number_of">Number of tasks</string>
     <string name="installMirakel">Please install Mirakel to use Dashclock-extension</string>
     <string name="showEmpty">Show if empty?</string>
+    <string name="showDueDate">Show due date?</string>
     <string name="how_many">How many tasks should be maximal shown?</string>
 
 </resources>

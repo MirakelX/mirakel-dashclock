@@ -31,5 +31,9 @@
     <CheckBoxPreference
         android:key="showEmpty"
         android:title="@string/showEmpty" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="showDueDate"
+        android:title="@string/showDueDate" />
 
 </PreferenceScreen>

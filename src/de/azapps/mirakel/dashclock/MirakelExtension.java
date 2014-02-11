@@ -89,6 +89,7 @@ public class MirakelExtension extends DashClockExtension {
 					getString(R.string.due_outformat), Locale.getDefault());
 			int counter = 0;
 			while (!c.isAfterLast() && counter < maxTasks) {
+
 				Date t = null;
 				if (!c.isNull(2)) {
 					try {
@@ -97,11 +98,12 @@ public class MirakelExtension extends DashClockExtension {
 						// Nothing
 					}
 				}
-				if (t != null)
+				if (t != null && settings.getBoolean("showDueDate", true)) {
 					expBody += getString(R.string.due, c.getString(0),
 							out.format(t));
-				else
+				} else {
 					expBody += c.getString(0);
+				}
 				c.moveToNext();
 				if (counter < maxTasks - 1 && !c.isAfterLast())
 					expBody += "\n";
