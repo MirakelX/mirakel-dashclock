@@ -19,7 +19,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.azapps.mirakel.dashclock"
-    android:versionCode="9"
+    android:versionCode="10"
     android:versionName="1.5" >
 
     <uses-permission android:name="de.azapps.mirakel.provider.READ_DATA" />

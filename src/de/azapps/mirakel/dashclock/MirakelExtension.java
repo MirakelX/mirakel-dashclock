@@ -78,6 +78,7 @@ public class MirakelExtension extends DashClockExtension {
 					.setSmallIcon(R.drawable.mirakel).build();
 			NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			mNotificationManager.notify(0, notif);
+			return;
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot communicate to Mirakel");
 			Log.w(TAG, Log.getStackTraceString(e));
