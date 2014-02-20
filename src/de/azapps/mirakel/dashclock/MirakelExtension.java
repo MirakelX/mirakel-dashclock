@@ -25,11 +25,15 @@ import java.util.Locale;
 import org.dmfs.provider.tasks.TaskContract;
 import org.dmfs.provider.tasks.TaskContract.Tasks;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
@@ -53,6 +57,7 @@ public class MirakelExtension extends DashClockExtension {
 		// Get Tasks
 		String[] col = { Tasks.TITLE, Tasks.PRIORITY, Tasks.DUE };
 		Cursor c = null;
+
 		try {
 			c = getContentResolver()
 					.query(Tasks.CONTENT_URI,
@@ -66,6 +71,13 @@ public class MirakelExtension extends DashClockExtension {
 									+ Tasks.DUE
 									+ " is NULL) then date('now','+1000 years') else date("
 									+ Tasks.DUE + ") end asc");
+		} catch (SecurityException e) {
+			Notification notif = new NotificationCompat.Builder(this)
+					.setContentText(getString(R.string.no_permission))
+					.setContentTitle(getString(R.string.no_permission_title))
+					.setSmallIcon(R.drawable.mirakel).build();
+			NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.notify(0, notif);
 		} catch (Exception e) {
 			Log.e(TAG, "Cannot communicate to Mirakel");
 			Log.w(TAG, Log.getStackTraceString(e));

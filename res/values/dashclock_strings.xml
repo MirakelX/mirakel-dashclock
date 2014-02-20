@@ -31,5 +31,7 @@
     <string name="showEmpty">Show if empty?</string>
     <string name="showDueDate">Show due date?</string>
     <string name="how_many">How many tasks should be maximal shown?</string>
+    <string name="no_permission_title">I have no permission to read the Mirakel data</string>
+    <string name="no_permission">Please reinstall Mirakel-Dashclock</string>
 
 </resources>
