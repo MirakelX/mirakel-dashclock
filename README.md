@@ -1,6 +1,8 @@
 mirakel-android
 ===============
 
+# We have merged the dashclock addon in the [main repo](https://github.com/MirakelX/mirakel-android)
+
 The DashclockExtension for the Android App for [Mirakel](https://github.com/azapps/mirakel-android)
 
 Mirakel is a free (as in freedom) Todo List App with some Features for Powerusers.
